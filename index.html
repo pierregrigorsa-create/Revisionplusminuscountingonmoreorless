@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Grade 1 Maths Revision</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: "Century Gothic", "ABC Junior Typing", Arial, sans-serif;
+    background: #c8e6b0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Confetti numbers in the background */
+  .confetti {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .confetti span {
+    position: absolute;
+    font-weight: bold;
+    opacity: 0.35;
+    animation: fall linear infinite;
+    user-select: none;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(-10vh) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(360deg); }
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+  }
+
+  /* Password screen */
+  #passwordScreen {
+    position: fixed;
+    inset: 0;
+    background: #c8e6b0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    overflow: hidden;
+  }
+  #passwordScreen .pw-card {
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    border: 5px solid #2e6b1f;
+    border-radius: 24px;
+    padding: 28px 36px;
+    box-shadow: 6px 8px 0 #2e6b1f33;
+    text-align: center;
+    max-width: 460px;
+    width: 100%;
+  }
+  #passwordScreen .heading-revision {
+    color: #2e6b1f;
+    font-size: 2.4em;
+    margin: 0 0 6px;
+    text-shadow: 2px 2px 0 #ffb84d;
+    letter-spacing: 1px;
+  }
+  #passwordScreen h1 {
+    color: #1f4d14;
+    font-size: 1.4em;
+    margin: 0 0 16px;
+    text-align: center;
+    font-weight: bold;
+  }
+  #passwordScreen .teacher-avatar {
+    width: 150px;
+    height: 150px;
+    margin: 6px auto 14px;
+    display: block;
+  }
+  /* Decorative floating numbers around the card */
+  .pw-decor {
+    position: absolute;
+    font-weight: bold;
+    font-size: 2.2em;
+    opacity: 0.85;
+    pointer-events: none;
+    animation: bobble 3s ease-in-out infinite;
+  }
+  @keyframes bobble {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50%      { transform: translateY(-12px) rotate(5deg); }
+  }
+  #passwordScreen input {
+    font-size: 1.5em;
+    padding: 12px 20px;
+    border: 4px solid #2e6b1f;
+    border-radius: 12px;
+    text-align: center;
+    font-family: inherit;
+    width: 260px;
+  }
+  #passwordScreen button {
+    margin-top: 18px;
+    font-size: 1.3em;
+    padding: 12px 30px;
+    background: #2e6b1f;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+  }
+  #passwordScreen button:hover { background: #1f4d14; }
+  #pwError { color: #c0392b; margin-top: 12px; font-weight: bold; min-height: 24px; }
+
+  h1.title {
+    text-align: center;
+    color: #2e6b1f;
+    font-size: 2.3em;
+    margin: 10px 0 6px;
+    text-shadow: 2px 2px 0 #fff;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 1.2em;
+    color: #1f4d14;
+    margin-bottom: 20px;
+  }
+
+  .intro-box {
+    background: #fff;
+    border: 5px solid #2e6b1f;
+    border-radius: 20px;
+    padding: 22px;
+    margin-bottom: 25px;
+    text-align: center;
+    box-shadow: 4px 6px 0 #2e6b1f33;
+  }
+  .intro-box button {
+    font-family: inherit;
+    font-size: 1.3em;
+    background: #ffb84d;
+    border: 3px solid #2e6b1f;
+    border-radius: 50px;
+    padding: 12px 28px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #2e6b1f;
+    margin: 4px;
+  }
+  .intro-box button:hover { background: #ffa733; }
+
+  .activity {
+    background: #fff;
+    border: 5px solid #2e6b1f;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 28px;
+    box-shadow: 4px 6px 0 #2e6b1f33;
+  }
+  .activity h2 {
+    color: #2e6b1f;
+    margin-top: 0;
+    font-size: 1.7em;
+    border-bottom: 3px dashed #2e6b1f;
+    padding-bottom: 8px;
+  }
+  .activity .instr {
+    font-size: 1.15em;
+    background: #fff8d6;
+    border-left: 6px solid #ffb84d;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+  .read-btn {
+    font-family: inherit;
+    font-size: 1em;
+    background: #2e6b1f;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 8px 18px;
+    cursor: pointer;
+    margin-left: 8px;
+    font-weight: bold;
+  }
+  .read-btn:hover { background: #1f4d14; }
+
+  /* Sum rows */
+  .sum-row, .count-row, .ml-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 1.6em;
+    margin: 12px 0;
+    padding: 10px 14px;
+    background: #f3fde6;
+    border-radius: 12px;
+    gap: 8px;
+  }
+  .sum-row span, .count-row span, .ml-row span { font-weight: bold; color: #1f4d14; }
+
+  input.answer {
+    font-family: inherit;
+    font-size: 1em;
+    width: 70px;
+    height: 50px;
+    text-align: center;
+    border: 3px solid #2e6b1f;
+    border-radius: 10px;
+    background: #fff;
+    font-weight: bold;
+    color: #1f4d14;
+  }
+  input.answer:focus { outline: 3px solid #ffb84d; }
+  input.answer.correct {
+    background: #7ed957 !important;
+    border-color: #2e6b1f !important;
+    color: #fff;
+  }
+  input.answer.wrong {
+    background: #ff6b6b !important;
+    border-color: #c0392b !important;
+    color: #fff;
+  }
+  input.answer:disabled { cursor: not-allowed; }
+
+  .check-btn {
+    display: block;
+    margin: 18px auto 6px;
+    font-family: inherit;
+    font-size: 1.3em;
+    background: #ffb84d;
+    border: 3px solid #2e6b1f;
+    border-radius: 50px;
+    padding: 12px 32px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #2e6b1f;
+  }
+  .check-btn:hover { background: #ffa733; }
+  .check-btn:disabled { background: #ccc; border-color: #888; color: #555; cursor: not-allowed; }
+
+  .feedback {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #2e6b1f;
+    min-height: 30px;
+  }
+
+  /* Final summary */
+  #finalSummary {
+    background: #fff;
+    border: 6px solid #2e6b1f;
+    border-radius: 20px;
+    padding: 28px;
+    text-align: center;
+    box-shadow: 4px 6px 0 #2e6b1f33;
+    display: none;
+  }
+  #finalSummary h2 {
+    color: #2e6b1f;
+    font-size: 2em;
+    margin-top: 0;
+  }
+  .score-circle {
+    display: inline-block;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: #ffb84d;
+    border: 6px solid #2e6b1f;
+    line-height: 148px;
+    font-size: 2.4em;
+    font-weight: bold;
+    color: #2e6b1f;
+    margin: 14px 0;
+  }
+  .stars { font-size: 2em; margin: 10px 0; }
+
+  /* Activity intro speech for child */
+  .child-cue {
+    background: #e8f5d9;
+    border: 3px dashed #2e6b1f;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    font-size: 1.1em;
+    color: #1f4d14;
+  }
+</style>
+</head>
+<body>
+
+<!-- Confetti -->
+<div class="confetti" id="confetti"></div>
+
+<!-- Password screen -->
+<div id="passwordScreen">
+
+  <!-- Decorative colourful numbers floating around -->
+  <span class="pw-decor" style="top:8%;  left:8%;  color:#ff6b6b; animation-delay:0s;">7</span>
+  <span class="pw-decor" style="top:14%; right:10%; color:#5d9cec; animation-delay:0.4s;">12</span>
+  <span class="pw-decor" style="top:35%; left:5%;  color:#a569bd; animation-delay:0.8s;">15</span>
+  <span class="pw-decor" style="top:42%; right:6%; color:#e67e22; animation-delay:1.2s;">3</span>
+  <span class="pw-decor" style="bottom:18%; left:12%; color:#27ae60; animation-delay:1.6s;">18</span>
+  <span class="pw-decor" style="bottom:22%; right:14%; color:#d62976; animation-delay:2s;">9</span>
+  <span class="pw-decor" style="bottom:6%; left:46%;  color:#f1c40f; animation-delay:2.4s;">20</span>
+  <span class="pw-decor" style="top:4%;   left:46%;   color:#16a085; animation-delay:0.6s;">5</span>
+
+  <div class="pw-card">
+    <h2 class="heading-revision">Revision 5</h2>
+
+    <!-- Friendly male teacher avatar (inline SVG) -->
+    <svg class="teacher-avatar" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Friendly male teacher">
+      <!-- Background circle -->
+      <circle cx="100" cy="100" r="95" fill="#fff8d6" stroke="#2e6b1f" stroke-width="4"/>
+
+      <!-- Neck -->
+      <rect x="82" y="148" width="36" height="22" fill="#f4c79b"/>
+
+      <!-- Shirt collar -->
+      <path d="M60 170 Q100 155 140 170 L140 200 L60 200 Z" fill="#5d9cec"/>
+      <path d="M88 162 L100 178 L112 162 L108 158 L100 168 L92 158 Z" fill="#fff"/>
+      <!-- Tie -->
+      <path d="M96 168 L104 168 L106 182 L100 195 L94 182 Z" fill="#c0392b"/>
+
+      <!-- Face -->
+      <ellipse cx="100" cy="110" rx="50" ry="55" fill="#f4c79b"/>
+
+      <!-- Ears -->
+      <ellipse cx="52"  cy="115" rx="8" ry="12" fill="#f4c79b"/>
+      <ellipse cx="148" cy="115" rx="8" ry="12" fill="#f4c79b"/>
+
+      <!-- Hair -->
+      <path d="M55 88 Q60 55 100 52 Q140 55 145 88 Q145 75 130 70 Q120 60 100 60 Q80 60 70 70 Q55 75 55 88 Z"
+            fill="#5d3a1a"/>
+      <!-- Side hair -->
+      <path d="M55 88 Q55 105 58 115 L58 95 Q56 92 55 88 Z" fill="#5d3a1a"/>
+      <path d="M145 88 Q145 105 142 115 L142 95 Q144 92 145 88 Z" fill="#5d3a1a"/>
+
+      <!-- Eyebrows -->
+      <path d="M72 96 Q80 92 88 96" stroke="#3d2510" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M112 96 Q120 92 128 96" stroke="#3d2510" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+      <!-- Eyes (kind, slightly smiling) -->
+      <ellipse cx="80"  cy="108" rx="5" ry="6" fill="#fff"/>
+      <ellipse cx="120" cy="108" rx="5" ry="6" fill="#fff"/>
+      <circle cx="80"  cy="109" r="3.2" fill="#3b2a1a"/>
+      <circle cx="120" cy="109" r="3.2" fill="#3b2a1a"/>
+      <circle cx="81"  cy="108" r="1"   fill="#fff"/>
+      <circle cx="121" cy="108" r="1"   fill="#fff"/>
+
+      <!-- Glasses -->
+      <circle cx="80"  cy="109" r="11" fill="none" stroke="#2e6b1f" stroke-width="2.5"/>
+      <circle cx="120" cy="109" r="11" fill="none" stroke="#2e6b1f" stroke-width="2.5"/>
+      <line   x1="91" y1="109" x2="109" y2="109" stroke="#2e6b1f" stroke-width="2.5"/>
+
+      <!-- Nose -->
+      <path d="M100 115 Q97 128 100 132 Q103 130 102 128" stroke="#c89070" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+      <!-- Cheeks (friendly blush) -->
+      <circle cx="72"  cy="128" r="6" fill="#ff9999" opacity="0.5"/>
+      <circle cx="128" cy="128" r="6" fill="#ff9999" opacity="0.5"/>
+
+      <!-- Big warm smile -->
+      <path d="M82 140 Q100 156 118 140" stroke="#3b2a1a" stroke-width="3" fill="#c0392b" stroke-linejoin="round"/>
+      <path d="M84 141 Q100 148 116 141 L116 142 Q100 144 84 142 Z" fill="#fff"/>
+    </svg>
+
+    <h1>🔒 Please Enter Password</h1>
+    <input type="password" id="pwInput" placeholder="Password" autocomplete="off">
+    <br>
+    <button onclick="checkPassword()">Enter</button>
+    <div id="pwError"></div>
+  </div>
+</div>
+
+<div class="wrap" id="mainContent" style="display:none;">
+
+  <h1 class="title">🌟 Grade 1 Maths Revision 🌟</h1>
+  <p class="subtitle">Plus &amp; Minus • Counting • More &amp; Less</p>
+
+  <!-- Welcome -->
+  <div class="intro-box">
+    <button onclick="speakIntro()">▶ Play Instructions</button>
+    <button onclick="stopSpeech()">⏹ Stop</button>
+    <p style="font-size:1.05em; color:#1f4d14; margin-top:14px;">
+      Click <strong>Play Instructions</strong> to hear what to do.
+    </p>
+  </div>
+
+  <!-- Activity 1: Plus and Minus -->
+  <div class="activity" id="act1">
+    <h2>Activity 1: Plus and Minus
+      <button class="read-btn" onclick="readText('Activity 1. Plus and Minus. Type the answer in each box. You only get one chance, so think carefully.')">🔊 Read</button>
+    </h2>
+    <div class="instr">
+      Type the answer in each box. You only get <strong>one chance</strong>, so think carefully before you type!
+    </div>
+    <div class="child-cue">👶 Before you type, tell Mum or Dad how you will get your answer.</div>
+
+    <div id="act1Sums"></div>
+
+    <button class="check-btn" id="act1Btn" onclick="checkActivity1()">✓ Check My Answers</button>
+    <div class="feedback" id="act1Feedback"></div>
+  </div>
+
+  <!-- Activity 2: Counting -->
+  <div class="activity" id="act2">
+    <h2>Activity 2: Counting
+      <button class="read-btn" onclick="readText('Activity 2. Counting. Look carefully and think before you type the missing numbers. You only get one chance.')">🔊 Read</button>
+    </h2>
+    <div class="instr">
+      Fill in the missing numbers. <strong>Look and think carefully</strong> before you type — you only get one turn!
+    </div>
+    <div class="child-cue">👶 Tell Mum or Dad if the numbers are getting bigger or smaller, and by how much.</div>
+
+    <div id="act2Rows"></div>
+
+    <button class="check-btn" id="act2Btn" onclick="checkActivity2()">✓ Check My Answers</button>
+    <div class="feedback" id="act2Feedback"></div>
+  </div>
+
+  <!-- Activity 3: More and Less -->
+  <div class="activity" id="act3">
+    <h2>Activity 3: More and Less
+      <button class="read-btn" onclick="readText('Activity 3. More and Less. Follow the following instructions. Type your answer in each box.')">🔊 Read</button>
+    </h2>
+    <div class="instr">
+      <strong>Follow the following instructions.</strong> Read each one and type your answer in the box.
+    </div>
+    <div class="child-cue">👨‍👧 Mum or Dad, please read the questions with your child. Ask: "Do we add or take away?" before they type.</div>
+
+    <div id="act3Rows"></div>
+
+    <button class="check-btn" id="act3Btn" onclick="checkActivity3()">✓ Check My Answers</button>
+    <div class="feedback" id="act3Feedback"></div>
+  </div>
+
+  <!-- Final summary -->
+  <div id="finalSummary">
+    <h2>🎉 Well Done, Mathematician! 🎉</h2>
+    <div class="score-circle" id="scoreCircle">0%</div>
+    <div class="stars" id="stars"></div>
+    <p id="summaryText" style="font-size:1.2em; color:#1f4d14;"></p>
+    <button class="check-btn" onclick="speakSummary()">🔊 Read Summary</button>
+  </div>
+
+</div>
+
+<script>
+/* ============== PASSWORD ============== */
+function checkPassword() {
+  const v = document.getElementById('pwInput').value.trim();
+  if (v === 'BPREV5') {
+    document.getElementById('passwordScreen').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    startConfetti();
+    // small delay so user is ready
+    setTimeout(speakIntro, 600);
+  } else {
+    document.getElementById('pwError').textContent = 'Oops! Wrong password. Try again.';
+  }
+}
+document.getElementById('pwInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPassword();
+});
+
+/* ============== CONFETTI BACKGROUND ============== */
+function startConfetti() {
+  const c = document.getElementById('confetti');
+  const colors = ['#2e6b1f', '#ffb84d', '#ff6b6b', '#5d9cec', '#a569bd', '#e67e22'];
+  for (let i = 0; i < 35; i++) {
+    const s = document.createElement('span');
+    const num = Math.floor(Math.random() * 11) + 10; // 10–20
+    s.textContent = num;
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.fontSize = (Math.random() * 28 + 22) + 'px';
+    s.style.color = colors[Math.floor(Math.random() * colors.length)];
+    s.style.animationDuration = (Math.random() * 12 + 10) + 's';
+    s.style.animationDelay = (Math.random() * 10) + 's';
+    c.appendChild(s);
+  }
+}
+
+/* ============== SPEECH (male, excited, with intonation) ============== */
+let currentUtterance = null;
+
+function pickMaleVoice() {
+  const voices = speechSynthesis.getVoices();
+  // try to find a clearly male English voice
+  const prefer = ['Google UK English Male', 'Microsoft Guy', 'Microsoft Ryan',
+                  'Daniel', 'Alex', 'Fred', 'Microsoft David', 'Google US English'];
+  for (const name of prefer) {
+    const v = voices.find(vv => vv.name.includes(name));
+    if (v) return v;
+  }
+  // fall back to any english voice
+  return voices.find(v => v.lang && v.lang.startsWith('en')) || voices[0];
+}
+
+function speak(text, rate = 0.85, pitch = 1.1) {
+  stopSpeech();
+  const u = new SpeechSynthesisUtterance(text);
+  const v = pickMaleVoice();
+  if (v) u.voice = v;
+  u.rate = rate;       // slow so Grade 1 learners can follow (L2 English)
+  u.pitch = pitch;     // slightly raised — sounds warm and excited
+  u.volume = 1;
+  currentUtterance = u;
+  speechSynthesis.speak(u);
+}
+
+function stopSpeech() {
+  if (speechSynthesis.speaking || speechSynthesis.pending) {
+    speechSynthesis.cancel();
+  }
+}
+
+function readText(t) { speak(t, 0.85, 1.1); }
+
+function speakIntro() {
+  // Intonation via punctuation: ?, !, ... and short clauses
+  const text =
+    "Hello, all my mathematicians! " +
+    "Are you ready, to do revision again? " +
+    "Mummy, or Daddy, can sit with you... and make sure that you understand what to do. " +
+    "Before you start your activities... tell Mum or Dad, what you are going to do, to get to your answer. " +
+    "Mum or Dad! Please help your child to read the instructions, and make sure that they try everything, by themselves. " +
+    "Remember, to put your thinking caps on! " +
+    "Let's start!";
+  speak(text, 0.82, 1.15);
+}
+
+// some browsers need the voiceschanged event before voices are populated
+if (typeof speechSynthesis !== 'undefined') {
+  speechSynthesis.onvoiceschanged = () => {};
+}
+
+/* ============== SOUND EFFECTS (Web Audio - no external files) ============== */
+const audioCtx = (window.AudioContext || window.webkitAudioContext) ?
+                  new (window.AudioContext || window.webkitAudioContext)() : null;
+
+function dingSound() {
+  if (!audioCtx) return;
+  const o = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  o.frequency.value = 880;
+  o.type = 'sine';
+  g.gain.setValueAtTime(0.001, audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.3, audioCtx.currentTime + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+  o.connect(g); g.connect(audioCtx.destination);
+  o.start();
+  o.frequency.exponentialRampToValueAtTime(1320, audioCtx.currentTime + 0.15);
+  o.stop(audioCtx.currentTime + 0.4);
+}
+function buzzSound() {
+  if (!audioCtx) return;
+  const o = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  o.frequency.value = 180;
+  o.type = 'square';
+  g.gain.setValueAtTime(0.15, audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+  o.connect(g); g.connect(audioCtx.destination);
+  o.start();
+  o.stop(audioCtx.currentTime + 0.35);
+}
+
+/* ============== ACTIVITY 1: PLUS / MINUS ============== */
+const act1Data = [
+  { a: 7, op: '+', b: 3, ans: 10 },
+  { a: 5, op: '−', b: 2, ans: 3  },
+  { a: 6, op: '−', b: 4, ans: 2  },
+  { a: 3, op: '+', b: 5, ans: 8  },
+  { a: 3, op: '+', b: 4, ans: 7  },
+  { a: 6, op: '−', b: 5, ans: 1  },
+  { a: 4, op: '−', b: 1, ans: 3  },
+  { a: 7, op: '−', b: 4, ans: 3  },
+  { a: 4, op: '+', b: 5, ans: 9  },
+  { a: 4, op: '+', b: 0, ans: 4  },
+];
+
+function renderAct1() {
+  const c = document.getElementById('act1Sums');
+  act1Data.forEach((s, i) => {
+    const row = document.createElement('div');
+    row.className = 'sum-row';
+    row.innerHTML = `
+      <span>${s.a} ${s.op} ${s.b} =</span>
+      <input type="text" inputmode="numeric" class="answer" id="a1-${i}" maxlength="3">
+    `;
+    c.appendChild(row);
+  });
+}
+renderAct1();
+
+let act1Done = false;
+function checkActivity1() {
+  if (act1Done) return;
+  act1Done = true;
+  let correct = 0;
+  act1Data.forEach((s, i) => {
+    const inp = document.getElementById('a1-' + i);
+    inp.disabled = true;
+    const val = parseInt(inp.value, 10);
+    if (val === s.ans) {
+      inp.classList.add('correct');
+      correct++;
+      setTimeout(dingSound, i * 120);
+    } else {
+      inp.classList.add('wrong');
+      // show correct answer next to it
+      if (inp.value === '' || isNaN(val)) {
+        inp.value = '?';
+      }
+      setTimeout(buzzSound, i * 120);
+    }
+  });
+  document.getElementById('act1Btn').disabled = true;
+  const msg = `You got ${correct} out of ${act1Data.length}. ${correct === act1Data.length ? '🌟 Amazing! You stayed focused!' : 'Well tried! Oops, count carefully next time. Stay focused!'}`;
+  document.getElementById('act1Feedback').textContent = msg;
+  readText(msg);
+  scores.act1 = { correct, total: act1Data.length };
+  checkAllDone();
+}
+
+/* ============== ACTIVITY 2: COUNTING ============== */
+// "box" = blank to fill. Use null for blanks.
+const act2Data = [
+  [7, 8, null, null, 11, null, null],          // 7,8,9,10,11,12,13
+  [4, 6, null, null, null, 14, null],          // 4,6,8,10,12,14,16  (+2)
+  [7, 9, null, null, 15, null, null],          // 7,9,11,13,15,17,19 (+2)
+  [16, null, 14, null, 12, null, null],        // 16,15,14,13,12,11,10 (-1)
+  [null, 10, 9, null, null, null]              // 11,10,9,8,7,6  (-1)
+];
+
+function fillSequence(arr) {
+  // figure out step from two known consecutive entries
+  const result = arr.slice();
+  // find two known with known difference and positions
+  let step = null;
+  for (let i = 0; i < arr.length - 1; i++) {
+    if (arr[i] !== null && arr[i+1] !== null) {
+      step = arr[i+1] - arr[i];
+      break;
+    }
+  }
+  if (step === null) {
+    // try spanning gaps
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = i + 1; j < arr.length; j++) {
+        if (arr[i] !== null && arr[j] !== null) {
+          step = (arr[j] - arr[i]) / (j - i);
+          break;
+        }
+      }
+      if (step !== null) break;
+    }
+  }
+  // anchor
+  let anchorIdx = arr.findIndex(v => v !== null);
+  const anchorVal = arr[anchorIdx];
+  for (let i = 0; i < arr.length; i++) {
+    if (result[i] === null) {
+      result[i] = anchorVal + (i - anchorIdx) * step;
+    }
+  }
+  return result;
+}
+
+function renderAct2() {
+  const c = document.getElementById('act2Rows');
+  act2Data.forEach((row, ri) => {
+    const filled = fillSequence(row);
+    const div = document.createElement('div');
+    div.className = 'count-row';
+    row.forEach((cell, ci) => {
+      if (cell === null) {
+        const inp = document.createElement('input');
+        inp.type = 'text';
+        inp.inputMode = 'numeric';
+        inp.className = 'answer';
+        inp.id = `a2-${ri}-${ci}`;
+        inp.dataset.ans = filled[ci];
+        inp.maxLength = 3;
+        div.appendChild(inp);
+      } else {
+        const sp = document.createElement('span');
+        sp.textContent = cell;
+        sp.style.minWidth = '50px';
+        sp.style.textAlign = 'center';
+        div.appendChild(sp);
+      }
+      if (ci < row.length - 1) {
+        const comma = document.createElement('span');
+        comma.textContent = ',';
+        comma.style.color = '#2e6b1f';
+        div.appendChild(comma);
+      }
+    });
+    c.appendChild(div);
+  });
+}
+renderAct2();
+
+let act2Done = false;
+function checkActivity2() {
+  if (act2Done) return;
+  act2Done = true;
+  let correct = 0, total = 0, delay = 0;
+  act2Data.forEach((row, ri) => {
+    row.forEach((cell, ci) => {
+      if (cell === null) {
+        total++;
+        const inp = document.getElementById(`a2-${ri}-${ci}`);
+        inp.disabled = true;
+        const ans = parseInt(inp.dataset.ans, 10);
+        const val = parseInt(inp.value, 10);
+        if (val === ans) {
+          inp.classList.add('correct');
+          correct++;
+          setTimeout(dingSound, delay);
+        } else {
+          inp.classList.add('wrong');
+          if (inp.value === '' || isNaN(val)) inp.value = '?';
+          setTimeout(buzzSound, delay);
+        }
+        delay += 120;
+      }
+    });
+  });
+  document.getElementById('act2Btn').disabled = true;
+  const msg = `You got ${correct} out of ${total}. ${correct === total ? '🌟 Wow! You counted so carefully!' : 'Well done for trying so hard! Keep practising your counting.'}`;
+  document.getElementById('act2Feedback').textContent = msg;
+  readText(msg);
+  scores.act2 = { correct, total };
+  checkAllDone();
+}
+
+/* ============== ACTIVITY 3: MORE / LESS ============== */
+const act3Data = [
+  { q: '2 more than 5', ans: 7 },
+  { q: '3 more than 9', ans: 12 },
+  { q: '3 less than 8', ans: 5 },
+  { q: '1 less than 10', ans: 9 },
+  { q: '4 more than 4', ans: 8 },
+  { q: '1 less than 6', ans: 5 },
+  { q: '2 more than 9', ans: 11 },
+  { q: '3 more than 5', ans: 8 },
+];
+
+function renderAct3() {
+  const c = document.getElementById('act3Rows');
+  act3Data.forEach((q, i) => {
+    const row = document.createElement('div');
+    row.className = 'ml-row';
+    row.innerHTML = `
+      <span>${q.q} =</span>
+      <input type="text" inputmode="numeric" class="answer" id="a3-${i}" maxlength="3">
+      <button class="read-btn" onclick="readText('${q.q.replace(/'/g, "\\'")}, equals?')">🔊</button>
+    `;
+    c.appendChild(row);
+  });
+}
+renderAct3();
+
+let act3Done = false;
+function checkActivity3() {
+  if (act3Done) return;
+  act3Done = true;
+  let correct = 0;
+  act3Data.forEach((q, i) => {
+    const inp = document.getElementById('a3-' + i);
+    inp.disabled = true;
+    const val = parseInt(inp.value, 10);
+    if (val === q.ans) {
+      inp.classList.add('correct');
+      correct++;
+      setTimeout(dingSound, i * 120);
+    } else {
+      inp.classList.add('wrong');
+      if (inp.value === '' || isNaN(val)) inp.value = '?';
+      setTimeout(buzzSound, i * 120);
+    }
+  });
+  document.getElementById('act3Btn').disabled = true;
+  const msg = `You got ${correct} out of ${act3Data.length}. ${correct === act3Data.length ? '🌟 Fantastic thinking!' : 'Lovely effort! Keep practising "more" and "less" — you are getting better and better!'}`;
+  document.getElementById('act3Feedback').textContent = msg;
+  readText(msg);
+  scores.act3 = { correct, total: act3Data.length };
+  checkAllDone();
+}
+
+/* ============== FINAL SUMMARY ============== */
+const scores = { act1: null, act2: null, act3: null };
+let summaryText = '';
+
+function checkAllDone() {
+  if (scores.act1 && scores.act2 && scores.act3) {
+    const tot = scores.act1.total + scores.act2.total + scores.act3.total;
+    const cor = scores.act1.correct + scores.act2.correct + scores.act3.correct;
+    const pct = Math.round((cor / tot) * 100);
+    document.getElementById('scoreCircle').textContent = pct + '%';
+    let stars = '';
+    if (pct >= 90) stars = '⭐⭐⭐⭐⭐';
+    else if (pct >= 75) stars = '⭐⭐⭐⭐';
+    else if (pct >= 60) stars = '⭐⭐⭐';
+    else if (pct >= 40) stars = '⭐⭐';
+    else stars = '⭐';
+    document.getElementById('stars').textContent = stars;
+
+    summaryText =
+      `Today we revised plus and minus, counting forwards and backwards, and more and less. ` +
+      `You got ${cor} out of ${tot} answers right — that is ${pct} percent. ` +
+      `Well done for trying your best, my clever mathematician! ` +
+      `Remember to try again during the week, to see if you can do it better, and faster. Keep on practising!`;
+
+    document.getElementById('summaryText').textContent = summaryText;
+    document.getElementById('finalSummary').style.display = 'block';
+    document.getElementById('finalSummary').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => speak(summaryText, 0.85, 1.1), 800);
+  }
+}
+
+function speakSummary() { speak(summaryText, 0.85, 1.1); }
+</script>
+</body>
+</html>
